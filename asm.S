@@ -46,9 +46,7 @@ _abs_start:
     .cfi_startproc
     .cfi_undefined ra
 
-    csrw mie, 0
-    csrw mip, 0
-
+    
     li  x1, 0
     li  x2, 0
     li  x3, 0
@@ -85,12 +83,6 @@ _abs_start:
     .option norelax
     la gp, __global_pointer$
     .option pop
-
-    // Check hart id
-    csrr a2, mhartid
-    lui t0, %hi(_max_hart_id)
-    add t0, t0, %lo(_max_hart_id)
-    bgtu a2, t0, abort
 
     // Allocate stacks
     la sp, _stack_start
@@ -174,8 +166,6 @@ default_start_trap:
 
 default_setup_interrupts:
     // Set trap handler
-    la t0, _start_trap
-    csrw mtvec, t0
     ret
 
 /* Make sure there is an abort when linking */
