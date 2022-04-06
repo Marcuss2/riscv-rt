@@ -17,11 +17,11 @@ foreach ($ext in $extension_sets)
     elseif ($ext.contains("f"))
         {$abi = "f"}
 
-    riscv64-unknown-elf-gcc -ggdb3 -fdebug-prefix-map=$pwd=/riscv-rt -c "-mabi=ilp32$abi" "-march=rv32$ext" asm.S -o bin/$crate.o
-    riscv64-unknown-elf-ar crs bin/riscv32$ext-unknown-none-elf.a bin/$crate.o
+    riscv64-elf-gcc -ggdb3 -fdebug-prefix-map=$pwd=/riscv-rt -c "-mabi=ilp32$abi" "-march=rv32$ext" asm.S -o bin/$crate.o
+    riscv64-elf-ar crs bin/riscv32$ext-unknown-none-elf.a bin/$crate.o
 
-    riscv64-unknown-elf-gcc -ggdb3 -fdebug-prefix-map=$pwd=/riscv-rt -c "-mabi=lp64$abi" "-march=rv64$ext" asm.S -o bin/$crate.o
-    riscv64-unknown-elf-ar crs bin/riscv64$ext-unknown-none-elf.a bin/$crate.o
+    riscv64-elf-gcc -ggdb3 -fdebug-prefix-map=$pwd=/riscv-rt -c "-mabi=lp64$abi" "-march=rv64$ext" asm.S -o bin/$crate.o
+    riscv64-elf-ar crs bin/riscv64$ext-unknown-none-elf.a bin/$crate.o
 }
 
 Remove-Item bin/$crate.o
